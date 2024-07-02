@@ -9,12 +9,14 @@ import SwiftUI
 
 struct EmojiRow: View {
     var emoji: Emoji
+    var bgColor: Color
     
     var body: some View {
         HStack(alignment: .top, spacing: 16){
             Text(emoji.emoji)
                 .frame(width: 80, height: 80)
-                .background(Color.red)
+            // bakalan keganti dengan color random
+                .background(bgColor)
                 .cornerRadius(10)
                 .font(.system(.largeTitle))
             VStack(alignment: .leading){
@@ -31,6 +33,7 @@ struct EmojiRow: View {
 
 #Preview {
     EmojiRow(
-        emoji: EmojiProvider.allEmojis().last!
+        emoji: EmojiProvider.allEmojis().last!,
+        bgColor: .red
     )
 }
