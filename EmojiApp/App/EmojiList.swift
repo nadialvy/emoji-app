@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EmojiList: View {
-    var allEmojis: [Emoji] = EmojiProvider.allEmojis()
+    @State var allEmojis: [Emoji] = EmojiProvider.allEmojis()
     var colorList: [Color] = [.red, .blue, .green, .yellow, .pink, .brown, .gray, .orange, .cyan, .black, .indigo, .mint, .teal]
     
     @State private var searchText = ""
@@ -35,7 +35,8 @@ struct EmojiList: View {
                 }
             }
             .refreshable {
-                
+                //randomize it (create illussion there is new data :) )
+                allEmojis = EmojiProvider.allEmojis().shuffled()
             }
             .navigationTitle("Emoji")
             .overlay{
