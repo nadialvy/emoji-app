@@ -9,7 +9,6 @@ import SwiftUI
 
 struct EmojiList: View {
     @State var allEmojis: [Emoji] = EmojiProvider.allEmojis()
-    var colorList: [Color] = [.red, .blue, .green, .yellow, .pink, .brown, .gray, .orange, .cyan, .black, .indigo, .mint, .teal]
     
     @State private var searchText = ""
     @State private var isActiveSearch = false
@@ -19,14 +18,15 @@ struct EmojiList: View {
             List{
                 ForEach(searchResult) { emoji in
                     NavigationLink{
-                        EmojiDetail(data: emoji, bgColor: colorList.randomElement()!)
+                        EmojiDetail(data: emoji, bgColor: .random)
                     } label: {
-                        EmojiRow(emoji: emoji, bgColor: colorList.randomElement()!)
+                        EmojiRow(emoji: emoji, bgColor: .random)
                     }
                 }
             }
             .searchable(
-                text: $searchText
+                text: $searchText,
+                prompt: "What's emoji you're looking for?"
             ){
                 if searchText.count >= 2{
                     ForEach(searchResult) { emoji in
@@ -35,7 +35,7 @@ struct EmojiList: View {
                 }
             }
             .refreshable {
-                //randomize it (create illussion there is new data :) )
+                //randomize it (create illussion there is new data)
                 allEmojis = EmojiProvider.allEmojis().shuffled()
             }
             .navigationTitle("Emoji")
@@ -51,8 +51,9 @@ struct EmojiList: View {
         if searchText.isEmpty{
             return allEmojis
         }else {
-            return allEmojis.filter{
-                $0.name.contains(searchText) || $0.description.contains(searchText)
+            return allEmojis.filter { emoji in
+                emoji.name.lowercased().contains(searchText.lowercased()) ||
+                emoji.description.lowercased().contains(searchText.lowercased())
             }
         }
     }
