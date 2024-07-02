@@ -19,7 +19,7 @@ struct EmojiList: View {
             List{
                 ForEach(searchResult) { emoji in
                     NavigationLink{
-                        EmojiDetail(data: emoji)
+                        EmojiDetail(data: emoji, bgColor: colorList.randomElement()!)
                     } label: {
                         EmojiRow(emoji: emoji, bgColor: colorList.randomElement()!)
                     }
